@@ -1,6 +1,10 @@
 import json
 import os
-
+import time
+import matplotlib.pyplot as plt
+from random import choices
+from generators import unordered_sequence
+from generators import  ordered_sequence
 # get current working directory path
 cwd_path = os.getcwd()
 
@@ -55,7 +59,58 @@ def main():
 
     # print(nacteni)
     # print(linearni)
-    print(binarni)
+    # print(binarni)
+    seq_casy = [100, 500, 1000, 5000, 10000]
+    linearni_seq = []
+    # linearni
+    for i in seq_casy:
+        seq = unordered_sequence(i)
+        start = time.perf_counter()
+        linear_search(seq, 0)
+        end = time.perf_counter()
+        duration_lin = end - start
+        linearni_seq.append(duration_lin)
+    print(f"Měření linearni trvalo {linearni_seq} s")
+    plt.plot(seq_casy, linearni_seq)
+
+    plt.xlabel("Velikost vstupu")
+    plt.ylabel("Čas [s]")
+    plt.title("Ukázkový graf měření linerarni")
+    plt.show()
+
+    # print(seq_500)
+    # seq_500 = unordered_sequence(500)
+    # start = time.perf_counter()
+    # linear_search(seq_500, 0)
+    # end = time.perf_counter()
+    # duration_lin = end - start
+    # print(f"Měření linearni trvalo {duration_lin:.8f} s")
+
+    # binarni
+    binar_seq = []
+    for i in seq_casy:
+        seq = ordered_sequence(i)
+        start = time.perf_counter()
+        binary_search(seq, 0)
+        end = time.perf_counter()
+        duration_bin = end - start
+        binar_seq.append(duration_bin)
+
+
+    print(f"Měření linearni trvalo {binar_seq} s")
+    plt.plot(seq_casy, binar_seq)
+
+    plt.xlabel("Velikost vstupu")
+    plt.ylabel("Čas [s]")
+    plt.title("Ukázkový graf měření binarni")
+    plt.show()
+
+    # serazeno_seq_500 = ordered_sequence(500)
+    # start = time.perf_counter()
+    # binary_search(serazeno_seq_500, 0)
+    # end = time.perf_counter()
+    # duration_bin = end - start
+    # print(f"Měření binarni trvalo {duration_bin:.8f} s")
 
 
 if __name__ == '__main__':
